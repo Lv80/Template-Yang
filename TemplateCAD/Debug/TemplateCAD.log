@@ -1,0 +1,39 @@
+﻿Build started 2013/8/28 7:19:36.
+     1>Project "C:\Users\chgu\Dropbox\Master\模本程序\TemplateCAD\TemplateCAD.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Debug\TemplateCAD.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         All outputs are up-to-date.
+         C:\Program Files (x86)\BullseyeCoverage\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\TemplateCAD.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt TemplateCAD.cpp TemplateCADDlg.cpp
+         TemplateCADDlg.cpp
+     1>c:\users\chgu\dropbox\master\模本程序\templatecad\templatecaddlg.cpp(184): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\chgu\dropbox\master\模本程序\templatecad\templatecaddlg.cpp(185): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\chgu\dropbox\master\模本程序\templatecad\templatecaddlg.cpp(186): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\chgu\dropbox\master\模本程序\templatecad\templatecaddlg.cpp(187): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+         Generating Code...
+         Skipping... (no relevant changes detected)
+         TemplateCAD.cpp
+       ResourceCompile:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /D _DEBUG /D _UNICODE /D UNICODE /l"0x0404" /IDebug\ /nologo /fo"Debug\TemplateCAD.res" TemplateCAD.rc 
+       ManifestResourceCompile:
+         All outputs are up-to-date.
+       Link:
+         C:\Program Files (x86)\BullseyeCoverage\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\chgu\Dropbox\Master\模本程序\Debug\TemplateCAD.exe" /INCREMENTAL /NOLOGO /MANIFEST /ManifestFile:"Debug\TemplateCAD.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\chgu\Dropbox\Master\模本程序\Debug\TemplateCAD.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /ENTRY:"wWinMainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\chgu\Dropbox\Master\模本程序\Debug\TemplateCAD.lib" /MACHINE:X86 Debug\TemplateCAD.res
+         Debug\TemplateCAD.exe.embed.manifest.res
+         Debug\stdafx.obj
+         Debug\TemplateCAD.obj
+         Debug\TemplateCADDlg.obj
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\TemplateCAD.exe.embed.manifest" /manifest Debug\TemplateCAD.exe.intermediate.manifest "C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\Include\Manifest\dpiaware.manifest"
+         All outputs are up-to-date.
+       LinkEmbedManifest:
+         All outputs are up-to-date.
+         TemplateCAD.vcxproj -> C:\Users\chgu\Dropbox\Master\模本程序\Debug\TemplateCAD.exe
+       FinalizeBuildStatus:
+         Deleting file "Debug\TemplateCAD.unsuccessfulbuild".
+         Touching "Debug\TemplateCAD.lastbuildstate".
+     1>Done Building Project "C:\Users\chgu\Dropbox\Master\模本程序\TemplateCAD\TemplateCAD.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:03.08

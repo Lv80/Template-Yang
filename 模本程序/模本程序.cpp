@@ -3,6 +3,10 @@
 
 #include "stdafx.h"
 #include "模本程序.h"
+#include <string>
+#include <CommCtrl.h>
+
+#pragma comment(lib,"Comctl32.lib")
 
 #define MAX_LOADSTRING 100
 
@@ -16,6 +20,13 @@ ATOM				MyRegisterClass(HINSTANCE hInstance);
 BOOL				InitInstance(HINSTANCE, int);
 LRESULT CALLBACK	WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK	About(HWND, UINT, WPARAM, LPARAM);
+VOID				ShowControlDialog(HWND);
+INT_PTR CALLBACK	ControlDialogHandle(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+VOID				SingleSelect(HWND);
+VOID				ShowCoordinateDialog(HWND);
+INT_PTR CALLBACK	CoordinateDialogHandle(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+VOID				InitCoordinateValue(HWND);
+INT_PTR CALLBACK	CoordinateListHandle(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 int APIENTRY _tWinMain(HINSTANCE hInstance,
                      HINSTANCE hPrevInstance,
@@ -136,20 +147,32 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	int wmId, wmEvent;
 	PAINTSTRUCT ps;
 	HDC hdc;
+		
+	HMENU hmenu = GetMenu(hWnd);	
 
 	switch (message)
 	{
 	case WM_COMMAND:
 		wmId    = LOWORD(wParam);
 		wmEvent = HIWORD(wParam);
+		
+		CheckMenuItem(hmenu, wmId, MF_BYCOMMAND | MF_CHECKED); 
+
 		// Parse the menu selections:
 		switch (wmId)
 		{
 		case IDM_ABOUT:
 			DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
 			break;
+		case IDM_CUST_EXIT:
 		case IDM_EXIT:
 			DestroyWindow(hWnd);
+			break;
+		case ID_MN_CONTROL:
+			ShowControlDialog(hWnd);
+			break;
+		case ID_MN_COORDINATE:
+			ShowCoordinateDialog(hWnd);
 			break;
 		default:
 			return DefWindowProc(hWnd, message, wParam, lParam);
@@ -186,5 +209,158 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		break;
 	}
+	return (INT_PTR)FALSE;
+}
+
+VOID ShowControlDialog(HWND hWnd)
+{
+	DialogBox(hInst, MAKEINTRESOURCE(IDD_CONTROL_DLG), hWnd, ControlDialogHandle);
+}
+
+// Message handler for about box.
+INT_PTR CALLBACK ControlDialogHandle(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	UNREFERENCED_PARAMETER(lParam);
+
+	int wmId, wmEvent;
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+		return (INT_PTR)TRUE;
+
+	case WM_COMMAND:
+		wmId    = LOWORD(wParam);
+		wmEvent = HIWORD(wParam);
+
+		switch(wmId)
+		{
+		case IDOK:
+		case IDCANCEL:
+
+			EndDialog(hDlg, LOWORD(wParam));
+			break;
+
+		case IDC_RADIO_SINGLE:
+			SingleSelect(hDlg);
+		}
+
+		return true;
+
+	default: 
+
+		break;
+	}
+
+	return (INT_PTR)FALSE;
+}
+
+VOID SingleSelect(HWND hDlg)
+{
+	HWND hMultiWnd = GetDlgItem(hDlg, IDC_RADIO_MULTI);
+	INT multiID = GetWindowLong(hMultiWnd, GWL_ID);
+	SendMessage(hMultiWnd, BM_SETCHECK, BST_UNCHECKED,0);
+
+	HWND checkItem = GetDlgItem(hDlg, IDC_CHECK_MULTI_LINE);
+	EnableWindow(checkItem,false);
+}
+
+VOID ShowCoordinateDialog(HWND hWnd)
+{
+	DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG_COORDINATE), hWnd, CoordinateDialogHandle);
+}
+
+// Message handler for about box.
+INT_PTR CALLBACK CoordinateDialogHandle(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	UNREFERENCED_PARAMETER(lParam);
+
+	int wmId, wmEvent;
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+		{
+			HWND hMultiWnd = GetDlgItem(hDlg, IDC_EDIT_REC_X1);
+			SetWindowLong(hMultiWnd, GWL_WNDPROC, (LONG)CoordinateListHandle);
+
+			SetWindowText(hMultiWnd, L"-1.2");
+
+			wchar_t text[100];
+			GetWindowText(hMultiWnd, text, 100);
+
+			int message = LVM_INSERTCOLUMN;
+			InitCommonControls();
+
+			HWND hCoordinates = GetDlgItem(hDlg, IDC_LIST_COORDINATES);
+			LVCOLUMN ColInfo = {0};
+
+			ColInfo.mask = LVCF_TEXT | LVCF_WIDTH | LVCF_FMT;
+			ColInfo.iSubItem = 0;
+			ColInfo.fmt = LVCFMT_CENTER;
+			ColInfo.cx  = 140;
+			ColInfo.pszText = L"坐标X";
+			ColInfo.cchTextMax = 50;
+			SendMessage(hCoordinates, LVM_INSERTCOLUMN, WPARAM(0), LPARAM(&ColInfo));
+
+			return (INT_PTR)TRUE;
+		}
+
+	case WM_COMMAND:
+		wmId    = LOWORD(wParam);
+		wmEvent = HIWORD(wParam);
+
+		switch(wmId)
+		{
+		case IDOK:
+		case IDCANCEL:
+
+			EndDialog(hDlg, LOWORD(wParam));
+			break;
+
+		case IDC_RADIO_SINGLE:
+			SingleSelect(hDlg);
+		}
+
+		return true;
+
+	default: 
+		return DefWindowProc(hDlg, message, wParam, lParam);
+
+		break;
+	}
+
+	return (INT_PTR)FALSE;
+}
+
+INT_PTR CALLBACK CoordinateListHandle(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	UNREFERENCED_PARAMETER(lParam);
+
+	int wmId, wmEvent;
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+		return (INT_PTR)TRUE;
+
+	case WM_COMMAND:
+		wmId    = LOWORD(wParam);
+		wmEvent = HIWORD(wParam);
+		{
+
+		}
+		break;
+
+	case NM_DBLCLK:
+		{
+			int a = 0;
+			break;
+		}
+
+	default:
+		return DefWindowProc(hDlg, message, wParam, lParam);
+	}
+
 	return (INT_PTR)FALSE;
 }
