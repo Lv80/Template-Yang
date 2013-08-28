@@ -47,7 +47,8 @@ END_MESSAGE_MAP()
 static UINT indicators[] = { ID_SEPARATOR, IDS_COMPANY, IDS_MICROSOFT, IDS_TIME };
 
 CTemplateCADDlg::CTemplateCADDlg(CWnd* pParent /*=NULL*/)
-	: CDialogEx(CTemplateCADDlg::IDD, pParent)
+	: CDialogEx(CTemplateCADDlg::IDD, pParent),
+	m_nLastCommandId(0)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -61,15 +62,59 @@ BEGIN_MESSAGE_MAP(CTemplateCADDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
-	ON_COMMAND(IDM_OPENDATA, &CTemplateCADDlg::OnOpenData) //下面是其他一些建立好的菜单选项的消息映射
+	 //下面是其他一些建立好的菜单选项的消息映射
+	ON_COMMAND(IDM_OPENDATA, &CTemplateCADDlg::OnOpenData) //打开数据
+	ON_COMMAND(IDM_SAVEDATA, &CTemplateCADDlg::OnSaveData) //保存数据
+	ON_COMMAND(IDM_SAVEDATAAS, &CTemplateCADDlg::OnSaveDataAs) //另存数据
+	ON_COMMAND(IDM_CONTROL, &CTemplateCADDlg::OnControlData) //控制数据
+	ON_COMMAND(IDM_COORDINATE, &CTemplateCADDlg::OnCoorData) //坐标数据
 	ON_WM_INITMENUPOPUP()
 END_MESSAGE_MAP()
 
 void CTemplateCADDlg::OnOpenData()
 {
+	SaveLastCommand( IDM_OPENDATA ); 
+}
+
+void CTemplateCADDlg::OnSaveData()
+{
+	SaveLastCommand( IDM_SAVEDATA );  
+}
+
+void CTemplateCADDlg::OnSaveDataAs()
+{
+	SaveLastCommand( IDM_SAVEDATAAS );  
+}
+
+void CTemplateCADDlg::OnControlData()
+{
+	SaveLastCommand( IDM_CONTROL ); 
+}
+
+void CTemplateCADDlg::OnCoorData()
+{
+	SaveLastCommand( IDM_COORDINATE );  
+}
+
+void CTemplateCADDlg::SaveLastCommand(UINT nCommandId)
+{
+	MarkMenuById( nCommandId );
+
+	m_nLastCommandId = nCommandId;
+}
+
+void CTemplateCADDlg::MarkMenuById( UINT nMenuId )
+{
+	if( nMenuId == m_nLastCommandId )
+		return;
+
 	HMENU hmenu = ::GetMenu(m_hWnd);
-	CheckMenuItem(hmenu, IDM_OPENDATA, MF_BYCOMMAND | MF_CHECKED); 
-	int a = 0;
+
+	// deselect last menu
+	CheckMenuItem(hmenu, m_nLastCommandId, MF_BYCOMMAND | MF_UNCHECKED);
+
+	// select the new menu
+	CheckMenuItem(hmenu, nMenuId, MF_BYCOMMAND | MF_CHECKED); 
 }
 
 // CTemplateCADDlg 訊息處理常式

@@ -15,12 +15,13 @@ public:
 // 對話方塊資料
 	enum { IDD = IDD_TEMPLATECAD_DIALOG };
 
-	protected:
+protected:
+	
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV 支援
-
 
 // 程式碼實作
 protected:
+
 	HICON m_hIcon;
 
 	CToolBar m_wndToolBar;
@@ -31,8 +32,14 @@ protected:
 	// 產生的訊息對應函式
 	virtual BOOL OnInitDialog();
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
-	afx_msg void OnOpenData();
 	afx_msg void OnPaint();
+
+	//菜单事件
+	afx_msg void OnOpenData();
+	afx_msg void OnSaveData();
+	afx_msg void OnSaveDataAs();
+	afx_msg void OnControlData();
+	afx_msg void OnCoorData();
 	
 	afx_msg HCURSOR OnQueryDragIcon();
 
@@ -42,4 +49,14 @@ protected:
 	void CreateStatusBar();
 
 	DECLARE_MESSAGE_MAP()
+
+private:
+
+	void SaveLastCommand(UINT nCommandId);
+
+	void MarkMenuById( UINT nMenuId );
+
+private:
+
+	UINT m_nLastCommandId;
 };
