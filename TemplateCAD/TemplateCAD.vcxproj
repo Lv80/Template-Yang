@@ -96,6 +96,8 @@
   <ItemGroup>
     <None Include="ReadMe.txt" />
     <None Include="res\bmp00001.bmp" />
+    <None Include="res\icon1.ico" />
+    <None Include="res\icon2.ico" />
     <None Include="res\TemplateCAD.ico" />
     <None Include="res\TemplateCAD.rc2" />
     <None Include="res\toolbar1.bmp" />

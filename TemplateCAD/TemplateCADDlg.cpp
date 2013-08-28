@@ -61,11 +61,14 @@ BEGIN_MESSAGE_MAP(CTemplateCADDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
-	ON_COMMAND(ID_OPENDATA, &CTemplateCADDlg::OnOpenData) //下面是其他一些建立好的菜单选项的消息映射
+	ON_COMMAND(IDM_OPENDATA, &CTemplateCADDlg::OnOpenData) //下面是其他一些建立好的菜单选项的消息映射
+	ON_WM_INITMENUPOPUP()
 END_MESSAGE_MAP()
 
 void CTemplateCADDlg::OnOpenData()
 {
+	HMENU hmenu = ::GetMenu(m_hWnd);
+	CheckMenuItem(hmenu, IDM_OPENDATA, MF_BYCOMMAND | MF_CHECKED); 
 	int a = 0;
 }
 
@@ -181,10 +184,10 @@ void CTemplateCADDlg::CreateStatusBar()
         this->GetClientRect(&Rect);                  //获取客户区域
         m_StatusBarCtrl.Create(WS_CHILD | WS_VISIBLE,CRect(0,0,0,0),this, IDR_TOOLBAR_STATUS);
         int width[5];
-        width[0]=Rect.Width()*0.1;
-		width[1]=Rect.Width()*0.4;
-        width[2]=Rect.Width()*0.6;
-        width[3]=Rect.Width()*0.8;
+        width[0]=(int)(Rect.Width()*0.1);
+		width[1]=(int)(Rect.Width()*0.4);
+        width[2]=(int)(Rect.Width()*0.6);
+        width[3]=(int)(Rect.Width()*0.8);
         width[4]=Rect.Width();
         m_StatusBarCtrl.SetParts(5,width);
         m_StatusBarCtrl.SetText(L"说明",0,0);
@@ -243,3 +246,84 @@ HCURSOR CTemplateCADDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+void CTemplateCADDlg::OnInitMenuPopup(CMenu *pPopupMenu, UINT nIndex,BOOL bSysMenu)
+{
+    ASSERT(pPopupMenu != NULL);
+    // Check the enabled state of various menu items. 
+
+    CCmdUI state;
+    state.m_pMenu = pPopupMenu;
+    ASSERT(state.m_pOther == NULL);
+    ASSERT(state.m_pParentMenu == NULL); 
+
+    // Determine if menu is popup in top-level menu and set m_pOther to
+    // it if so (m_pParentMenu == NULL indicates that it is secondary popup).
+    HMENU hParentMenu;
+    if (AfxGetThreadState()->m_hTrackingMenu == pPopupMenu->m_hMenu){
+        state.m_pParentMenu = pPopupMenu;    // Parent == child for tracking popup.
+	}
+    else if ((hParentMenu = ::GetMenu(m_hWnd)) != NULL)
+    {
+        CWnd* pParent = this;
+           // Child Windows don't have menus--need to go to the top!
+        if (pParent != NULL &&
+           (hParentMenu = ::GetMenu(pParent->m_hWnd)) != NULL)
+        {
+           int nIndexMax = ::GetMenuItemCount(hParentMenu);
+           for (int nIndex = 0; nIndex < nIndexMax; nIndex++)
+           {
+            if (::GetSubMenu(hParentMenu, nIndex) == pPopupMenu->m_hMenu)
+            {
+                // When popup is found, m_pParentMenu is containing menu.
+                state.m_pParentMenu = CMenu::FromHandle(hParentMenu);
+                break;
+            }
+           }
+        }
+    } 
+
+    state.m_nIndexMax = pPopupMenu->GetMenuItemCount();
+	for (state.m_nIndex = 0; state.m_nIndex < state.m_nIndexMax;
+      state.m_nIndex++)
+    {
+        state.m_nID = pPopupMenu->GetMenuItemID(state.m_nIndex);
+        if (state.m_nID == 0)
+           continue; // Menu separator or invalid cmd - ignore it. 
+
+        ASSERT(state.m_pOther == NULL);
+        ASSERT(state.m_pMenu != NULL);
+        if (state.m_nID == (UINT)-1)
+        {
+           // Possibly a popup menu, route to first item of that popup.
+           state.m_pSubMenu = pPopupMenu->GetSubMenu(state.m_nIndex);
+           if (state.m_pSubMenu == NULL ||
+            (state.m_nID = state.m_pSubMenu->GetMenuItemID(0)) == 0 ||
+            state.m_nID == (UINT)-1)
+           {
+				continue;       // First item of popup can't be routed to.
+           }
+           state.DoUpdate(this, TRUE);   // Popups are never auto disabled.
+        }
+        else
+        {
+           // Normal menu item.
+           // Auto enable/disable if frame window has m_bAutoMenuEnable
+           // set and command is _not_ a system command.
+           state.m_pSubMenu = NULL;
+           state.DoUpdate(this, FALSE);
+        } 
+
+		// Adjust for menu deletions and additions.
+        UINT nCount = pPopupMenu->GetMenuItemCount();
+        if (nCount < state.m_nIndexMax)
+        {
+           state.m_nIndex -= (state.m_nIndexMax - nCount);
+           while (state.m_nIndex < nCount && pPopupMenu->GetMenuItemID(state.m_nIndex) == state.m_nID)
+           {
+				state.m_nIndex++;
+           }
+        }
+        state.m_nIndexMax = nCount;
+    }
+}

@@ -36,6 +36,8 @@ protected:
 	
 	afx_msg HCURSOR OnQueryDragIcon();
 
+	afx_msg void OnInitMenuPopup(CMenu *pPopupMenu, UINT nIndex,BOOL bSysMenu);
+
 	void CreateToolBar();
 	void CreateStatusBar();
 
