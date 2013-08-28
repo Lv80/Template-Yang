@@ -15,6 +15,7 @@
 
 BEGIN_MESSAGE_MAP(CTemplateCADApp, CWinApp)
 	ON_COMMAND(ID_HELP, &CWinApp::OnHelp)
+	ON_UPDATE_COMMAND_UI(IDM_OPENDATA, &CTemplateCADApp::OnUpdateOpendata)
 END_MESSAGE_MAP()
 
 
@@ -96,3 +97,10 @@ BOOL CTemplateCADApp::InitInstance()
 	return FALSE;
 }
 
+
+
+void CTemplateCADApp::OnUpdateOpendata(CCmdUI *pCmdUI)
+{
+	// TODO: Add your command update UI handler code here
+	pCmdUI->SetCheck();
+}

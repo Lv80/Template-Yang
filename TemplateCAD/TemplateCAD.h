@@ -27,6 +27,7 @@ public:
 // ≥Ã Ω¥aåç◊˜
 
 	DECLARE_MESSAGE_MAP()
+	afx_msg void OnUpdateOpendata(CCmdUI *pCmdUI);
 };
 
 extern CTemplateCADApp theApp;

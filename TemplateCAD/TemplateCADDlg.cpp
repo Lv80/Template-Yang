@@ -7,6 +7,7 @@
 #include "TemplateCAD.h"
 #include "TemplateCADDlg.h"
 #include "afxdialogex.h"
+#include "MenuTipManager.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -160,6 +161,9 @@ BOOL CTemplateCADDlg::OnInitDialog()
 
 	CreateStatusBar();
 
+	CMenuTipManager tip;
+	tip.Install(this);
+
 	return TRUE;  // 傳回 TRUE，除非您對控制項設定焦點
 }
 
@@ -262,16 +266,24 @@ void CTemplateCADDlg::ChangeMenuColorAsSelected( UINT nMenuId )
 	CBitmap bitmap;
 	bitmap.LoadBitmap(IDB_BITMAP_MENU_BACK);
 
-	CBrush brush;
-	MENUITEMINFO  lpcmi;
-	brush.CreateSolidBrush(RGB(255,0,0));//你的颜色
-	memset(&lpcmi,0,sizeof(::MENUITEMINFO));
+	CBrush m_brush;
+    ::MENUINFO lpcmi; //：：必须写不然无法识别
+    m_brush.CreateSolidBrush(RGB(255,0,0));//你的颜色
+    memset(&lpcmi,0,sizeof(::LPCMENUINFO));
+    lpcmi.cbSize=sizeof(MENUINFO);
+    lpcmi.fMask= MIM_BACKGROUND;   
+    lpcmi.hbrBack=(HBRUSH)m_brush.operator HBRUSH();
+    ::SetMenuInfo(GetMenu()->m_hMenu,&lpcmi);
 
-	lpcmi.cbSize = sizeof(MENUITEMINFO);
-	lpcmi.fMask = MIM_BACKGROUND;   
-	lpcmi.hbmpItem = (HBITMAP)&bitmap;
+	int count = GetMenu()->GetMenuItemCount();
+	CMenu* subMenu = GetMenu()->GetSubMenu(count - 2);
 
-	SetMenuItemInfo(::GetMenu(m_hWnd), nMenuId, false, &lpcmi);
+	int subCount = subMenu->GetMenuItemCount();
+	subMenu->SetMenuItemBitmaps(subCount-1, MF_BYPOSITION, &bitmap, &bitmap);
+
+	CString text;
+	subMenu->GetMenuStringW(subCount-1, text, MF_BYPOSITION);
+	//SetMenuItemInfo(::GetMenu(m_hWnd), nMenuId, false, &lpcmi);
 }
 
 void CTemplateCADDlg::OnSysCommand(UINT nID, LPARAM lParam)
@@ -388,8 +400,21 @@ void CTemplateCADDlg::OnInitMenuPopup(CMenu *pPopupMenu, UINT nIndex,BOOL bSysMe
            // Auto enable/disable if frame window has m_bAutoMenuEnable
            // set and command is _not_ a system command.
            state.m_pSubMenu = NULL;
-           state.DoUpdate(this, FALSE);
-        } 
+
+		   //TODO what you want
+		   //state.Enable(false);
+		   //state.SetRadio();
+
+		   MENUITEMINFO  lpcmi;
+		   memset(&lpcmi,0,sizeof(::MENUITEMINFO));
+		   lpcmi.cbSize = sizeof(MENUITEMINFO);
+
+		   GetMenuItemInfo(::GetMenu(m_hWnd), state.m_nID, MF_BYCOMMAND, &lpcmi);
+		   lpcmi.fState = MFS_HILITE;   
+		   SetMenuItemInfo(::GetMenu(m_hWnd), state.m_nID, MF_BYCOMMAND, &lpcmi);
+           state.DoUpdate(this, TRUE);
+
+		} 
 
 		// Adjust for menu deletions and additions.
         UINT nCount = pPopupMenu->GetMenuItemCount();
@@ -403,4 +428,6 @@ void CTemplateCADDlg::OnInitMenuPopup(CMenu *pPopupMenu, UINT nIndex,BOOL bSysMe
         }
         state.m_nIndexMax = nCount;
     }
+
+	DrawMenuBar();
 }
