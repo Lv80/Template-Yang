@@ -100,6 +100,10 @@ void CTemplateCADDlg::SaveLastCommand(UINT nCommandId)
 {
 	MarkMenuById( nCommandId );
 
+	ShowMenuOnStatusBar( nCommandId );
+
+	ChangeMenuColorAsSelected( nCommandId );
+
 	m_nLastCommandId = nCommandId;
 }
 
@@ -234,12 +238,40 @@ void CTemplateCADDlg::CreateStatusBar()
         width[2]=(int)(Rect.Width()*0.6);
         width[3]=(int)(Rect.Width()*0.8);
         width[4]=Rect.Width();
+
         m_StatusBarCtrl.SetParts(5,width);
-        m_StatusBarCtrl.SetText(L"说明",0,0);
-        m_StatusBarCtrl.SetText(L"AutoCAD模板程序",1,0);
-        m_StatusBarCtrl.SetText(L"系统时间",3,0);
+        m_StatusBarCtrl.SetText(L"提示说明",0,0);
+        m_StatusBarCtrl.SetText(L"",1,0);
+        m_StatusBarCtrl.SetText(L"当前菜单",3,0);
+
         SetTimer(1,1000,NULL);                             //设置定时器
 	}
+}
+
+void CTemplateCADDlg::ShowMenuOnStatusBar( UINT nMenuId )
+{
+	TCHAR menuString[256];
+	HMENU hmenu = ::GetMenu(m_hWnd);
+	GetMenuString(hmenu, nMenuId, menuString, 256, MF_BYCOMMAND);
+
+	m_StatusBarCtrl.SetText(menuString,4,0);
+}
+
+void CTemplateCADDlg::ChangeMenuColorAsSelected( UINT nMenuId )
+{
+	CBitmap bitmap;
+	bitmap.LoadBitmap(IDB_BITMAP_MENU_BACK);
+
+	CBrush brush;
+	MENUITEMINFO  lpcmi;
+	brush.CreateSolidBrush(RGB(255,0,0));//你的颜色
+	memset(&lpcmi,0,sizeof(::MENUITEMINFO));
+
+	lpcmi.cbSize = sizeof(MENUITEMINFO);
+	lpcmi.fMask = MIM_BACKGROUND;   
+	lpcmi.hbmpItem = (HBITMAP)&bitmap;
+
+	SetMenuItemInfo(::GetMenu(m_hWnd), nMenuId, false, &lpcmi);
 }
 
 void CTemplateCADDlg::OnSysCommand(UINT nID, LPARAM lParam)

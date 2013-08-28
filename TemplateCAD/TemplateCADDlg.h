@@ -56,6 +56,10 @@ private:
 
 	void MarkMenuById( UINT nMenuId );
 
+	void ShowMenuOnStatusBar( UINT nMenuId );
+
+	void ChangeMenuColorAsSelected( UINT nMenuId );
+
 private:
 
 	UINT m_nLastCommandId;

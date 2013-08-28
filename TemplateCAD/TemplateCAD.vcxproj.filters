@@ -34,6 +34,9 @@
     <None Include="res\icon2.ico">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="res\bitmap1.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TemplateCAD.h">
