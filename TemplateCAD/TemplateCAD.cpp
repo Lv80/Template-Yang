@@ -5,6 +5,9 @@
 #include "stdafx.h"
 #include "TemplateCAD.h"
 #include "TemplateCADDlg.h"
+#include "TemplateData.h"
+
+#include <fstream>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -52,6 +55,7 @@ BOOL CTemplateCADApp::InitInstance()
 
 	CWinApp::InitInstance();
 
+	InitializeConfig();
 
 	AfxEnableControlContainer();
 
@@ -97,10 +101,33 @@ BOOL CTemplateCADApp::InitInstance()
 	return FALSE;
 }
 
-
-
 void CTemplateCADApp::OnUpdateOpendata(CCmdUI *pCmdUI)
 {
 	// TODO: Add your command update UI handler code here
 	//pCmdUI->SetCheck();
+}
+
+void CTemplateCADApp::InitializeWorkingDir()
+{
+	//存放路径[默认工程文件与可执行程序在同一目录下]
+	CString exeFullPath;   
+
+	//第一个参数为NULL时,则得到调用当前DLL文件的可执行程序的路径,为DLL句柄时,就得到DLL文件的路径
+	GetModuleFileName(NULL, exeFullPath.GetBufferSetLength(MAX_PATH+1), MAX_PATH);
+	cout << _T("\n模板程序的路径是【%s】") << exeFullPath.GetBuffer();
+
+	m_szWorkingDirectory = exeFullPath.Left(exeFullPath.ReverseFind('\\'));
+}
+
+void CTemplateCADApp::InitializeConfig()
+{
+	InitializeWorkingDir();
+
+	char buf[MAX_PATH];
+	m_szConfigFile.AppendFormat(_T("%s/%s"), m_szWorkingDirectory.GetBuffer(), TEMPLATE_CONFIG_FILE);
+	ifstream configFile(m_szConfigFile);
+	configFile.getline(buf, MAX_PATH);
+
+	m_szWoringPrjFile = m_szWorkingDirectory + _T("\\") + CString(buf);
+	CTemplateData::GetInstance()->Initialize(m_szWoringPrjFile);
 }

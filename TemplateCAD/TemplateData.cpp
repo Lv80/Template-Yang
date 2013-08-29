@@ -2,8 +2,11 @@
 #include "TemplateData.h"
 #include <fstream>
 #include <iostream>
+#include "TemplateCAD.h"
 
 using namespace std;
+
+extern CTemplateCADApp theApp;
 
 ifstream& operator>>( ifstream& stream, CCoornidateData& coornidateData)
 {
@@ -93,7 +96,7 @@ void CTemplateData::Persistent( CString& file )
 
 void CTemplateData::Persistent()
 {
-
+	Persistent( theApp.GetWorkingPrjFile() );
 }
 
 CTemplateData* CTemplateData::GetInstance()

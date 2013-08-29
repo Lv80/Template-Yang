@@ -11,6 +11,18 @@ struct Point3d
 	double x;
 	double y;
 	double z;
+
+	Point3d()
+	{
+		this->x = this->y =  this->z = 0.0;
+	}
+
+	Point3d(double& rX, double& rY, double& rZ)
+	{
+		this->x = rX;
+		this->y = rY;
+		this->z = rZ;
+	}
 };
 
 //¾ØÐÎ
@@ -20,6 +32,22 @@ typedef struct _Rectangle
 	double topRight;
 	double bottomLeft;
 	double bottomRight;
+
+	_Rectangle()
+	{
+		this->topLeft = this->topRight 
+			=  this->bottomLeft = this->bottomRight = 0.0;
+	}
+
+	_Rectangle(double& rTopLeft, double& rTopRight, 
+			double& rBottomLeft, double& rBottomRight)
+	{
+		this->topLeft = rTopLeft;
+		this->topRight = rTopRight;
+		this->bottomLeft = rBottomLeft;
+		this->bottomRight = rBottomRight;
+	}
+
 } Rect;
 
 class CCircle
@@ -63,7 +91,8 @@ public:
 
 	CCoornidateData():
 	m_pCoordinateList( new list<Point3d*>() )
-	{}
+	{
+	}
 
 	~CCoornidateData()
 	{

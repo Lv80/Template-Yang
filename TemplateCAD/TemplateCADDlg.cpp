@@ -11,11 +11,13 @@
 #include "TemplateData.h"
 
 #include "ControlData.h"
+#include <iostream>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
+extern CTemplateCADApp theApp;
 
 // 對 App About 使用 CAboutDlg 對話方塊
 
@@ -85,14 +87,7 @@ void CTemplateCADDlg::OnOpenData()
 	CFileDialog dlg(TRUE, _T("prj"), _T(""), OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, szFilter.GetBuffer(), this, 0/*, TRUE*/);
 
 	//存放路径[默认工程文件与可执行程序在同一目录下]
-	CString exeFullPath;   
-
-	//第一个参数为NULL时,则得到调用当前DLL文件的可执行程序的路径,为DLL句柄时,就得到DLL文件的路径
-	GetModuleFileName(NULL, exeFullPath.GetBufferSetLength(MAX_PATH+1), MAX_PATH);
-	printf("\n模板程序的路径是【%s】", exeFullPath.GetBuffer());
-
-	CString exeFoler = exeFullPath.Left(exeFullPath.ReverseFind('\\'));
-	dlg.m_ofn.lpstrInitialDir = exeFoler.GetBuffer();
+	dlg.m_ofn.lpstrInitialDir = theApp.GetWorkingDirectory();   
 
 	if (dlg.DoModal() == IDOK) 
 	{
@@ -108,6 +103,7 @@ void CTemplateCADDlg::OnOpenData()
 
 void CTemplateCADDlg::OnSaveData()
 {
+	CTemplateData::GetInstance()->Persistent();
 	SaveLastCommand( IDM_SAVEDATA );  
 }
 
@@ -121,7 +117,7 @@ void CTemplateCADDlg::OnControlData()
 	CControlData controlDataDlg;
 	if( controlDataDlg.DoModal() == IDOK )
 	{
-
+		cout << "设置了新的控制数据" << endl;
 	}
 
 	SaveLastCommand( IDM_CONTROL ); 

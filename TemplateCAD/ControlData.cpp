@@ -26,6 +26,14 @@ void CControlData::DoDataExchange(CDataExchange* pDX)
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_RADIO_SINGLE, m_btnModeSingle);
 	DDX_Control(pDX, IDC_RADIO_MULTI, m_btnModeMulti);
+
+	DDX_Control(pDX, IDC_RADIO_SINGLE_LINE, m_btnSingleTypeLine);
+	DDX_Control(pDX, IDC_RADIO_SINGLE_RECT, m_btnSingleTypeRect);
+	DDX_Control(pDX, IDC_RADIO_SINGLE_CIRCLE, m_btnSingleTypeCircle);
+
+	DDX_Control(pDX, IDC_CHECK_MULTI_LINE, m_btnMultiTypeLine);
+	DDX_Control(pDX, IDC_CHECK_MULTI_RECT, m_btnMultiTypeRect);
+	DDX_Control(pDX, IDC_CHECK_MULTI_CIRCLE, m_btnMultiTypeCircle);
 }
 
 BEGIN_MESSAGE_MAP(CControlData, CDialogEx)
@@ -109,7 +117,7 @@ void CControlData::CalculateDrawType()
 {
 	m_DrawType = CTemplateData::DRAW_NONE;
 
-	if( m_DrawMode = CTemplateData::DRAW_SINGLE )
+	if( m_DrawMode == CTemplateData::DRAW_SINGLE )
 	{
 		if( m_btnSingleTypeLine.GetCheck() == BST_CHECKED )
 		{
@@ -130,11 +138,13 @@ void CControlData::CalculateDrawType()
 		{
 			m_DrawType |= CTemplateData::DRAW_LINE;
 		} 
-		else if( m_btnMultiTypeRect.GetCheck() == BST_CHECKED )
+		
+		if( m_btnMultiTypeRect.GetCheck() == BST_CHECKED )
 		{
 			m_DrawType |= CTemplateData::DRAW_RECT;
 		} 
-		else if( m_btnMultiTypeCircle.GetCheck() == BST_CHECKED )
+		
+		if( m_btnMultiTypeCircle.GetCheck() == BST_CHECKED )
 		{
 			m_DrawType |= CTemplateData::DRAW_CIRCLE;
 		} 
