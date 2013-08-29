@@ -40,6 +40,12 @@ public:
 	  {}
 
 	  ~CCircle(){}
+
+	  const double& GetCenter() const { return m_dCenter; }
+	  const double& GetRadius() const { return m_dCenter; }
+
+	  void SetCenter( const double& center ) { m_dCenter = center; }
+	  void SetRadius( const double& radius ) { m_dRadius = radius; }
 };
 
 typedef list<Point3d*> PointList;
@@ -75,6 +81,9 @@ public:
 
 	size_t InsertCoornidate( const Point3d* newPoint );
 	const PointList* GetCoornidateList() const { return m_pCoordinateList; }
+
+	friend ifstream& operator>>( ifstream& stream, CCoornidateData& coornidateData);
+	friend ofstream& operator<<( ofstream& stream, CCoornidateData& coornidateData);
 };
 
 class CTemplateData
@@ -97,7 +106,7 @@ private:
 
 	//Control Data
 	DRAW_MODE m_EDrawMode;
-	DRAW_TYPE m_EDrawType;
+	int m_EDrawType;
 	CCoornidateData *m_pCoordinateData;
 
 	static CTemplateData *instance;
@@ -117,18 +126,18 @@ public:
 	static CTemplateData* GetInstance();
 
 	DRAW_MODE GetDrawMode() const { return m_EDrawMode; }
-	DRAW_TYPE GetDrawType() const { return m_EDrawType; }
+	int GetDrawType() const { return m_EDrawType; }
 	CCoornidateData* GetCoornidate() const { return m_pCoordinateData; }
 
 	void SetDrawMode( DRAW_MODE mode ) { m_EDrawMode = mode; }
-	void SetDrawType( DRAW_TYPE type ) { m_EDrawType = type; }
+	void SetDrawType( int type ) { m_EDrawType = type; }
 
 	void Initialize( CString& prjPath );
-	void Persistent( const CString& file );
+	void Persistent( CString& file );
 	void Persistent();
 
 	friend ifstream& operator>>( ifstream& stream, CTemplateData& templateData);
-	friend ifstream& operator<<( ifstream& stream, CTemplateData& templateData);
+	friend ofstream& operator<<( ofstream& stream, CTemplateData& templateData);
 
 	CTemplateData& operator+(int offset);
 	CTemplateData& operator-(int offset);

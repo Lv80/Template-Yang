@@ -10,6 +10,8 @@
 #include "MenuTipManager.h"
 #include "TemplateData.h"
 
+#include "ControlData.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -116,6 +118,12 @@ void CTemplateCADDlg::OnSaveDataAs()
 
 void CTemplateCADDlg::OnControlData()
 {
+	CControlData controlDataDlg;
+	if( controlDataDlg.DoModal() == IDOK )
+	{
+
+	}
+
 	SaveLastCommand( IDM_CONTROL ); 
 }
 
