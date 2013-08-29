@@ -8,6 +8,7 @@
 #include "TemplateCADDlg.h"
 #include "afxdialogex.h"
 #include "MenuTipManager.h"
+#include "TemplateData.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -78,8 +79,8 @@ void CTemplateCADDlg::OnOpenData()
 
 	//导入选择对话框
 	CString szFilter;
-	szFilter.Format(L"%s", L"输入数据 (*.prj)|*.prj||");
-	CFileDialog dlg(TRUE, L"prj", L"", OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, szFilter.GetBuffer(), this, 0/*, TRUE*/);
+	szFilter.Format("%s", _T("输入数据 (*.prj)|*.prj||"));
+	CFileDialog dlg(TRUE, _T("prj"), _T(""), OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, szFilter.GetBuffer(), this, 0/*, TRUE*/);
 
 	//存放路径[默认工程文件与可执行程序在同一目录下]
 	CString exeFullPath;   
@@ -99,6 +100,7 @@ void CTemplateCADDlg::OnOpenData()
 
 		//TODO
 		//打开文件并保存到数据结构中
+		CTemplateData::GetInstance()->Initialize(impFile);
 	}
 }
 
@@ -269,9 +271,9 @@ void CTemplateCADDlg::CreateStatusBar()
         width[4]=Rect.Width();
 
         m_StatusBarCtrl.SetParts(5,width);
-        m_StatusBarCtrl.SetText(L"提示说明",0,0);
-        m_StatusBarCtrl.SetText(L"",1,0);
-        m_StatusBarCtrl.SetText(L"当前菜单",3,0);
+        m_StatusBarCtrl.SetText(_T("提示说明"),0,0);
+        m_StatusBarCtrl.SetText(_T(""),1,0);
+        m_StatusBarCtrl.SetText(_T("当前菜单"),3,0);
 
         SetTimer(1,1000,NULL);                             //设置定时器
 	}
@@ -307,7 +309,7 @@ void CTemplateCADDlg::ChangeMenuColorAsSelected( UINT nMenuId )
 	subMenu->SetMenuItemBitmaps(subCount-1, MF_BYPOSITION, &bitmap, &bitmap);
 
 	CString text;
-	subMenu->GetMenuStringW(subCount-1, text, MF_BYPOSITION);
+	subMenu->GetMenuString(subCount-1, text, MF_BYPOSITION);
 	//SetMenuItemInfo(::GetMenu(m_hWnd), nMenuId, false, &lpcmi);
 }
 

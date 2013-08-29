@@ -1,17 +1,19 @@
-﻿Build started 2013/8/29 19:46:44.
+﻿Build started 2013/8/29 23:22:06.
      1>Project "C:\Users\chgu\Dropbox\Master\模本程序\TemplateCAD\TemplateCAD.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
-         Touching "Debug\TemplateCAD.unsuccessfulbuild".
+         Creating "Debug\TemplateCAD.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
          All outputs are up-to-date.
-         C:\Program Files (x86)\BullseyeCoverage\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\TemplateCAD.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt TemplateData.cpp
+         C:\Program Files (x86)\BullseyeCoverage\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\TemplateCAD.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt TemplateCADDlg.cpp TemplateData.cpp
          TemplateData.cpp
+         TemplateCADDlg.cpp
+         Generating Code...
        ResourceCompile:
          All outputs are up-to-date.
        ManifestResourceCompile:
          All outputs are up-to-date.
        Link:
-         C:\Program Files (x86)\BullseyeCoverage\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\chgu\Dropbox\Master\模本程序\Debug\TemplateCAD.exe" /INCREMENTAL /NOLOGO /MANIFEST /ManifestFile:"Debug\TemplateCAD.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\chgu\Dropbox\Master\模本程序\Debug\TemplateCAD.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /ENTRY:"wWinMainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\chgu\Dropbox\Master\模本程序\Debug\TemplateCAD.lib" /MACHINE:X86 Debug\TemplateCAD.res
+         C:\Program Files (x86)\BullseyeCoverage\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\chgu\Dropbox\Master\模本程序\Debug\TemplateCAD.exe" /INCREMENTAL /NOLOGO /MANIFEST /ManifestFile:"Debug\TemplateCAD.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\chgu\Dropbox\Master\模本程序\Debug\TemplateCAD.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\chgu\Dropbox\Master\模本程序\Debug\TemplateCAD.lib" /MACHINE:X86 Debug\TemplateCAD.res
          Debug\TemplateCAD.exe.embed.manifest.res
          Debug\MenuTipManager.obj
          Debug\PupText.obj
@@ -33,4 +35,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:04.73
+Time Elapsed 00:00:03.28
