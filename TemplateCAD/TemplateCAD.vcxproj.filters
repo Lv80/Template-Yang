@@ -63,6 +63,9 @@
     <ClInclude Include="PupText.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TemplateData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TemplateCAD.cpp">
@@ -81,6 +84,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PupText.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TemplateData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -74,7 +74,32 @@ END_MESSAGE_MAP()
 
 void CTemplateCADDlg::OnOpenData()
 {
-	SaveLastCommand( IDM_OPENDATA ); 
+	SaveLastCommand( IDM_OPENDATA );
+
+	//导入选择对话框
+	CString szFilter;
+	szFilter.Format(L"%s", L"输入数据 (*.prj)|*.prj||");
+	CFileDialog dlg(TRUE, L"prj", L"", OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, szFilter.GetBuffer(), this, 0/*, TRUE*/);
+
+	//存放路径[默认工程文件与可执行程序在同一目录下]
+	CString exeFullPath;   
+
+	//第一个参数为NULL时,则得到调用当前DLL文件的可执行程序的路径,为DLL句柄时,就得到DLL文件的路径
+	GetModuleFileName(NULL, exeFullPath.GetBufferSetLength(MAX_PATH+1), MAX_PATH);
+	printf("\n模板程序的路径是【%s】", exeFullPath.GetBuffer());
+
+	CString exeFoler = exeFullPath.Left(exeFullPath.ReverseFind('\\'));
+	dlg.m_ofn.lpstrInitialDir = exeFoler.GetBuffer();
+
+	if (dlg.DoModal() == IDOK) 
+	{
+		//得到导入文件
+        CString impFile = dlg.GetPathName();
+		printf("\n导入的工程文件是【%s】.",impFile.GetBuffer());
+
+		//TODO
+		//打开文件并保存到数据结构中
+	}
 }
 
 void CTemplateCADDlg::OnSaveData()

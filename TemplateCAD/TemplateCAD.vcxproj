@@ -112,6 +112,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TemplateCAD.h" />
     <ClInclude Include="TemplateCADDlg.h" />
+    <ClInclude Include="TemplateData.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MenuTipManager.cpp" />
@@ -123,6 +124,7 @@
     <ClCompile Include="Subclass.cpp" />
     <ClCompile Include="TemplateCAD.cpp" />
     <ClCompile Include="TemplateCADDlg.cpp" />
+    <ClCompile Include="TemplateData.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="TemplateCAD.rc" />

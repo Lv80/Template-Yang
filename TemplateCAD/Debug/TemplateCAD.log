@@ -1,11 +1,11 @@
-﻿Build started 2013/8/29 7:03:59.
+﻿Build started 2013/8/29 19:46:44.
      1>Project "C:\Users\chgu\Dropbox\Master\模本程序\TemplateCAD\TemplateCAD.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
-         Creating "Debug\TemplateCAD.unsuccessfulbuild" because "AlwaysCreate" was specified.
+         Touching "Debug\TemplateCAD.unsuccessfulbuild".
        ClCompile:
          All outputs are up-to-date.
-         C:\Program Files (x86)\BullseyeCoverage\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\TemplateCAD.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt TemplateCAD.cpp
-         TemplateCAD.cpp
+         C:\Program Files (x86)\BullseyeCoverage\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\TemplateCAD.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt TemplateData.cpp
+         TemplateData.cpp
        ResourceCompile:
          All outputs are up-to-date.
        ManifestResourceCompile:
@@ -19,6 +19,7 @@
          Debug\Subclass.obj
          Debug\TemplateCAD.obj
          Debug\TemplateCADDlg.obj
+         Debug\TemplateData.obj
        Manifest:
          C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\TemplateCAD.exe.embed.manifest" /manifest Debug\TemplateCAD.exe.intermediate.manifest "C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\Include\Manifest\dpiaware.manifest"
          All outputs are up-to-date.
@@ -32,4 +33,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.28
+Time Elapsed 00:00:04.73

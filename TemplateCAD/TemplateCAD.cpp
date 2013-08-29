@@ -102,5 +102,5 @@ BOOL CTemplateCADApp::InitInstance()
 void CTemplateCADApp::OnUpdateOpendata(CCmdUI *pCmdUI)
 {
 	// TODO: Add your command update UI handler code here
-	pCmdUI->SetCheck();
+	//pCmdUI->SetCheck();
 }
