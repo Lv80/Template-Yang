@@ -1,11 +1,11 @@
-﻿Build started 2013/9/4 6:34:05.
+﻿Build started 2013/9/4 7:06:40.
      1>Project "C:\Users\chgu\Dropbox\Master\模本程序\TemplateCAD\TemplateCAD.vcxproj" on node 2 (Build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\TemplateCAD.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
          All outputs are up-to-date.
-         C:\Program Files (x86)\BullseyeCoverage\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\TemplateCAD.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt TemplateData.cpp
-         TemplateData.cpp
+         C:\Program Files (x86)\BullseyeCoverage\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\TemplateCAD.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt TemplateCADDlg.cpp
+         TemplateCADDlg.cpp
        ResourceCompile:
          All outputs are up-to-date.
        ManifestResourceCompile:
@@ -13,7 +13,8 @@
        Link:
          C:\Program Files (x86)\BullseyeCoverage\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\chgu\Dropbox\C++\SampleCode\Debug\TemplateCAD.exe" /INCREMENTAL /NOLOGO /MANIFEST /ManifestFile:"Debug\TemplateCAD.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\chgu\Dropbox\C++\SampleCode\Debug\TemplateCAD.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\chgu\Dropbox\C++\SampleCode\Debug\TemplateCAD.lib" /MACHINE:X86 Debug\TemplateCAD.res
          Debug\TemplateCAD.exe.embed.manifest.res
-         Debug\ControlData.obj
+         Debug\ControlDataDlg.obj
+         Debug\CoordinateDlg.obj
          Debug\MenuTipManager.obj
          Debug\PupText.obj
          Debug\stdafx.obj
@@ -34,4 +35,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.89
+Time Elapsed 00:00:02.22

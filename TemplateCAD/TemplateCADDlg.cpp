@@ -10,7 +10,9 @@
 #include "MenuTipManager.h"
 #include "TemplateData.h"
 
-#include "ControlData.h"
+#include "ControlDataDlg.h"
+#include "CoordinateDlg.h"
+
 #include <iostream>
 
 #ifdef _DEBUG
@@ -81,7 +83,7 @@ void CTemplateCADDlg::OnOpenData()
 {
 	SaveLastCommand( IDM_OPENDATA );
 
-	//导入选择对话框
+	//输入选择对话框
 	CString szFilter;
 	szFilter.Format("%s", _T("输入数据 (*.prj)|*.prj||"));
 	CFileDialog dlg(TRUE, _T("prj"), _T(""), OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, szFilter.GetBuffer(), this, 0/*, TRUE*/);
@@ -91,13 +93,13 @@ void CTemplateCADDlg::OnOpenData()
 
 	if (dlg.DoModal() == IDOK) 
 	{
-		//得到导入文件
-        CString impFile = dlg.GetPathName();
-		printf("\n导入的工程文件是【%s】.",impFile.GetBuffer());
+		//得到导出文件
+        CString expFile = dlg.GetPathName();
+		printf("\n导入的工程文件是【%s】.", expFile.GetBuffer());
 
 		//TODO
-		//打开文件并保存到数据结构中
-		CTemplateData::GetInstance()->Initialize(impFile);
+		//打开文件并保存到文件中
+		CTemplateData::GetInstance()->Persistent(expFile);
 	}
 }
 
@@ -110,21 +112,46 @@ void CTemplateCADDlg::OnSaveData()
 void CTemplateCADDlg::OnSaveDataAs()
 {
 	SaveLastCommand( IDM_SAVEDATAAS );  
+
+	//输入选择对话框
+	CString szFilter;
+	szFilter.Format("%s", _T("输入数据 (*.prj)|*.prj||"));
+	CFileDialog dlg(FALSE, _T("prj"), _T(""), OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, szFilter.GetBuffer(), this, 0/*, TRUE*/);
+
+	//存放路径[默认工程文件与可执行程序在同一目录下]
+	dlg.m_ofn.lpstrInitialDir = theApp.GetWorkingDirectory();   
+
+	if (dlg.DoModal() == IDOK) 
+	{
+		//得到导入文件
+        CString impFile = dlg.GetPathName();
+		printf("\n导入的工程文件是【%s】.",impFile.GetBuffer());
+
+		//TODO
+		//打开文件并保存到数据结构中
+		CTemplateData::GetInstance()->Persistent(impFile);
+	}
 }
 
 void CTemplateCADDlg::OnControlData()
 {
+	SaveLastCommand( IDM_CONTROL ); 
+
 	CControlDataDlg controlDataDlg;
 	if( controlDataDlg.DoModal() == IDOK )
 	{
 		cout << "设置了新的控制数据" << endl;
 	}
-
-	SaveLastCommand( IDM_CONTROL ); 
 }
 
 void CTemplateCADDlg::OnCoorData()
 {
+	CCoordinateDlg coordinateDlg;
+	if( coordinateDlg.DoModal() == IDOK )
+	{
+		cout << "设置了新的坐标数据" << endl;
+	}
+
 	SaveLastCommand( IDM_COORDINATE );  
 }
 

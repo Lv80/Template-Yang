@@ -104,7 +104,8 @@
     <None Include="res\toolbar1.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ControlData.h" />
+    <ClInclude Include="ControlDataDlg.h" />
+    <ClInclude Include="CoordinateDlg.h" />
     <ClInclude Include="MenuTipManager.h" />
     <ClInclude Include="PupText.h" />
     <ClInclude Include="Resource.h" />
@@ -116,7 +117,8 @@
     <ClInclude Include="TemplateData.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ControlData.cpp" />
+    <ClCompile Include="ControlDataDlg.cpp" />
+    <ClCompile Include="CoordinateDlg.cpp" />
     <ClCompile Include="MenuTipManager.cpp" />
     <ClCompile Include="PupText.cpp" />
     <ClCompile Include="stdafx.cpp">

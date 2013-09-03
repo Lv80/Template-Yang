@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 #include "TemplateCAD.h"
-#include "ControlData.h"
+#include "ControlDataDlg.h"
 #include "afxdialogex.h"
 
 
