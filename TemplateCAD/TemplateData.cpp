@@ -45,15 +45,17 @@ ofstream& operator<<( ofstream& stream, CCoornidateData& coornidateData)
 			iter != coornidateData.m_pCoordinateList->end();
 			iter++)
 	{
-		stream << (*iter)->x << (*iter)->y << (*iter)->z;
+		stream << (*iter)->x << " " << (*iter)->y << " " << (*iter)->z << endl ;
 	}
 
 	// rectangle
-	stream << coornidateData.m_Rect.topLeft << coornidateData.m_Rect.topRight
-		<< coornidateData.m_Rect.bottomLeft << coornidateData.m_Rect.bottomRight;
+	stream << coornidateData.m_Rect.topLeft << " " 
+			<< coornidateData.m_Rect.topRight << " "
+			<< coornidateData.m_Rect.bottomLeft << " "
+			<< coornidateData.m_Rect.bottomRight << endl;
 
-	stream << coornidateData.m_Circle.GetCenter()
-		<< coornidateData.m_Circle.GetRadius();
+	stream << coornidateData.m_Circle.GetCenter() << " "
+		<< coornidateData.m_Circle.GetRadius() << endl;
 
 	return stream;
 }
@@ -124,8 +126,8 @@ ifstream& operator>>(ifstream& stream, CTemplateData& templateData)
 
 ofstream& operator<<( ofstream& stream, CTemplateData& templateData)
 {
-	stream << (int)templateData.m_EDrawMode;
-	stream << templateData.m_EDrawType;
+	stream << (int)templateData.m_EDrawMode << endl;
+	stream << templateData.m_EDrawType << endl;
 	stream << (*templateData.m_pCoordinateData);
 
 	return stream;

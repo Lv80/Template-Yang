@@ -128,6 +128,11 @@ void CTemplateCADApp::InitializeConfig()
 	ifstream configFile(m_szConfigFile);
 	configFile.getline(buf, MAX_PATH);
 
+	if( strlen(buf) == 0 )
+	{
+		strcpy_s(buf, MAX_PATH, "Ä£°åÊý¾Ý.prj");
+	}
+
 	m_szWoringPrjFile = m_szWorkingDirectory + _T("\\") + CString(buf);
 	CTemplateData::GetInstance()->Initialize(m_szWoringPrjFile);
 }

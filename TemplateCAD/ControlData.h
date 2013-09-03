@@ -2,21 +2,22 @@
 #include "afxwin.h"
 #include "TemplateData.h"
 
-// CControlData dialog
+// CControlDataDlg dialog
 
-class CControlData : public CDialogEx
+class CControlDataDlg : public CDialogEx
 {
-	DECLARE_DYNAMIC(CControlData)
+	DECLARE_DYNAMIC(CControlDataDlg)
 
 public:
-	CControlData(CWnd* pParent = NULL);   // standard constructor
-	virtual ~CControlData();
+	CControlDataDlg(CWnd* pParent = NULL);   // standard constructor
+	virtual ~CControlDataDlg();
 
 // Dialog Data
 	enum { IDD = IDD_CONTROL_DLG };
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+	virtual BOOL OnInitDialog();
 
 	DECLARE_MESSAGE_MAP()
 

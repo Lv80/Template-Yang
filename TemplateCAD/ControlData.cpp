@@ -7,21 +7,76 @@
 #include "afxdialogex.h"
 
 
-// CControlData dialog
+// CControlDataDlg dialog
 
-IMPLEMENT_DYNAMIC(CControlData, CDialogEx)
+IMPLEMENT_DYNAMIC(CControlDataDlg, CDialogEx)
 
-CControlData::CControlData(CWnd* pParent /*=NULL*/)
-	: CDialogEx(CControlData::IDD, pParent)
+CControlDataDlg::CControlDataDlg(CWnd* pParent /*=NULL*/)
+	: CDialogEx(CControlDataDlg::IDD, pParent)
 {
 
 }
 
-CControlData::~CControlData()
+CControlDataDlg::~CControlDataDlg()
 {
 }
 
-void CControlData::DoDataExchange(CDataExchange* pDX)
+BOOL CControlDataDlg::OnInitDialog()
+{
+	//和页面交互数据
+	CDialog::OnInitDialog();
+
+	CTemplateData::DRAW_MODE drawMode =
+		CTemplateData::GetInstance()->GetDrawMode();
+
+	int drawType =
+		CTemplateData::GetInstance()->GetDrawType();
+
+	if( drawMode == CTemplateData::DRAW_SINGLE )
+	{
+		//设置绘画类型
+		if( drawType & CTemplateData::DRAW_LINE )
+		{
+			m_btnSingleTypeLine.SetCheck(true);
+		} 
+		else if ( drawType & CTemplateData::DRAW_RECT )
+		{
+			m_btnSingleTypeRect.SetCheck(true);
+		}
+		else if( drawType & CTemplateData::DRAW_CIRCLE )
+		{
+			m_btnSingleTypeCircle.SetCheck(true);
+		}
+
+		m_btnModeSingle.SetCheck(true);
+		SendMessage( WM_COMMAND, m_btnModeSingle.GetDlgCtrlID(), (LONG)GetSafeHwnd() );
+	}
+	else if( drawMode == CTemplateData::DRAW_MULTI )
+	{
+		//设置绘画类型
+		if( drawType & CTemplateData::DRAW_LINE )
+		{
+			m_btnMultiTypeLine.SetCheck(true);
+		} 
+		
+		if ( drawType & CTemplateData::DRAW_RECT )
+		{
+			m_btnMultiTypeRect.SetCheck(true);
+		}
+		
+		if( drawType & CTemplateData::DRAW_CIRCLE )
+		{
+			m_btnMultiTypeCircle.SetCheck(true);
+		}
+
+		m_btnModeMulti.SetCheck(true);
+		SendMessage( WM_COMMAND, m_btnModeMulti.GetDlgCtrlID(), (LONG)GetSafeHwnd() );
+	}
+
+	return true;
+}
+
+void CControlDataDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_RADIO_SINGLE, m_btnModeSingle);
@@ -36,20 +91,20 @@ void CControlData::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CHECK_MULTI_CIRCLE, m_btnMultiTypeCircle);
 }
 
-BEGIN_MESSAGE_MAP(CControlData, CDialogEx)
-	ON_BN_CLICKED(IDC_RADIO_SINGLE, &CControlData::OnClickedRadioSingle)
-	ON_BN_CLICKED(IDC_RADIO_MULTI, &CControlData::OnClickedRadioMulti)
-	ON_BN_CLICKED(IDC_RADIO_SINGLE_LINE, &CControlData::OnClickedRadioSingleLine)
-	ON_BN_CLICKED(IDC_RADIO_SINGLE_RECT, &CControlData::OnClickedRadioSingleRect)
-	ON_BN_CLICKED(IDC_RADIO_SINGLE_CIRCLE, &CControlData::OnClickedRadioSingleCircle)
-	ON_BN_CLICKED(IDC_CHECK_MULTI_LINE, &CControlData::OnClickedCheckMultiLine)
-	ON_BN_CLICKED(IDOK, &CControlData::OnBnClickedOk)
+BEGIN_MESSAGE_MAP(CControlDataDlg, CDialogEx)
+	ON_BN_CLICKED(IDC_RADIO_SINGLE, &CControlDataDlg::OnClickedRadioSingle)
+	ON_BN_CLICKED(IDC_RADIO_MULTI, &CControlDataDlg::OnClickedRadioMulti)
+	ON_BN_CLICKED(IDC_RADIO_SINGLE_LINE, &CControlDataDlg::OnClickedRadioSingleLine)
+	ON_BN_CLICKED(IDC_RADIO_SINGLE_RECT, &CControlDataDlg::OnClickedRadioSingleRect)
+	ON_BN_CLICKED(IDC_RADIO_SINGLE_CIRCLE, &CControlDataDlg::OnClickedRadioSingleCircle)
+	ON_BN_CLICKED(IDC_CHECK_MULTI_LINE, &CControlDataDlg::OnClickedCheckMultiLine)
+	ON_BN_CLICKED(IDOK, &CControlDataDlg::OnBnClickedOk)
 END_MESSAGE_MAP()
 
 
-// CControlData message handlers
+// CControlDataDlg message handlers
 
-void CControlData::OnClickedRadioSingle()
+void CControlDataDlg::OnClickedRadioSingle()
 {
 	// TODO: Add your control notification handler code here
 	m_DrawMode = CTemplateData::DRAW_SINGLE;
@@ -57,7 +112,7 @@ void CControlData::OnClickedRadioSingle()
 	EnableSingleDraw();
 }
 
-void CControlData::OnClickedRadioMulti()
+void CControlDataDlg::OnClickedRadioMulti()
 {
 	// TODO: Add your control notification handler code here
 	m_DrawMode = CTemplateData::DRAW_MULTI;
@@ -65,7 +120,7 @@ void CControlData::OnClickedRadioMulti()
 	EnableMultiDraw();
 }
 
-void CControlData::EnableSingleDraw()
+void CControlDataDlg::EnableSingleDraw()
 {
 	m_btnSingleTypeLine.EnableWindow(TRUE);
 	m_btnSingleTypeRect.EnableWindow(TRUE);
@@ -77,7 +132,7 @@ void CControlData::EnableSingleDraw()
 }
 
 
-void CControlData::EnableMultiDraw()
+void CControlDataDlg::EnableMultiDraw()
 {
 	m_btnSingleTypeLine.EnableWindow(FALSE);
 	m_btnSingleTypeRect.EnableWindow(FALSE);
@@ -88,32 +143,32 @@ void CControlData::EnableMultiDraw()
 	m_btnMultiTypeCircle.EnableWindow(TRUE);
 }
 
-void CControlData::OnClickedRadioSingleLine()
+void CControlDataDlg::OnClickedRadioSingleLine()
 {
 	// TODO: Add your control notification handler code here
 	m_DrawType = CTemplateData::DRAW_LINE;
 }
 
 
-void CControlData::OnClickedRadioSingleRect()
+void CControlDataDlg::OnClickedRadioSingleRect()
 {
 	// TODO: Add your control notification handler code here
 	m_DrawType = CTemplateData::DRAW_RECT;
 }
 
 
-void CControlData::OnClickedRadioSingleCircle()
+void CControlDataDlg::OnClickedRadioSingleCircle()
 {
 	// TODO: Add your control notification handler code here
 	m_DrawType = CTemplateData::DRAW_CIRCLE;
 }
 
-void CControlData::OnClickedCheckMultiLine()
+void CControlDataDlg::OnClickedCheckMultiLine()
 {
 	// TODO: Add your control notification handler code here
 }
 
-void CControlData::CalculateDrawType()
+void CControlDataDlg::CalculateDrawType()
 {
 	m_DrawType = CTemplateData::DRAW_NONE;
 
@@ -152,7 +207,7 @@ void CControlData::CalculateDrawType()
 }
 
 
-void CControlData::OnBnClickedOk()
+void CControlDataDlg::OnBnClickedOk()
 {
 	CalculateDrawType();
 

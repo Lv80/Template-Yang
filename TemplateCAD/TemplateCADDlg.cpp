@@ -114,7 +114,7 @@ void CTemplateCADDlg::OnSaveDataAs()
 
 void CTemplateCADDlg::OnControlData()
 {
-	CControlData controlDataDlg;
+	CControlDataDlg controlDataDlg;
 	if( controlDataDlg.DoModal() == IDOK )
 	{
 		cout << "设置了新的控制数据" << endl;
